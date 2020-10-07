@@ -38,6 +38,12 @@ describe('Round', function() {
     expect(round.returnCurrentCard()).to.deep.equal(round.currentCard);
   });
 
+  it('should create a new turn when a guess is made', function() {
+    let round1 = round.turn;
+    round.takeTurn('pug');
+    expect(round1).to.not.equal(round.turn);
+  });
+
   it('should update the turn count when a turn is taken', function() {
     expect(round.turns).to.deep.equal(0);
     round.takeTurn();
@@ -45,7 +51,24 @@ describe('Round', function() {
   });
 
   it('should update the turn count independant of a correct/incorrect guess', function() {
+    expect(round.turns).to.deep.equal(0);
+    round.takeTurn('sea otter');
+    round.takeTurn('pug');
+    expect(round.turns).to.deep.equal(2);
+  });
 
+  it('should make the next card the current card', function() {
+    let previousCard = round.currentCard;
+    round.takeTurn();
+    expect(round.currentCard).to.not.equal(previousCard);
+    expect(round.currentCard).to.deep.equal(round.turn.card);
+  });
+
+  it('should evaluate guesses, and store the incorrect ones', function() {
+    expect(round.incorrectGuesses).to.be.an('array').that.is.empty;
+    let roundGuess = round.takeTurn('pug');
+    expect(roundGuess).to.equal(false);
+    expect(round.incorrectGuesses).to.be.an('array').that.includes(1);
   })
 
 })
