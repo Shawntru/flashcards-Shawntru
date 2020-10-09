@@ -1,7 +1,6 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const Turn = require('../src/Turn');
 const Card = require('../src/Card');
 const Deck = require('../src/Deck');
 
@@ -10,7 +9,6 @@ describe('Deck', () => {
   let card1;
   let card2;
   let card3;
-  let turn;
   let deck;
 
   beforeEach(() => {
